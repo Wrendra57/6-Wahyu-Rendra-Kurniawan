@@ -1,4 +1,6 @@
 const { Cars } = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 class carRepository {
     static async create({ name, tipemobil, price, image, createdBy }) {
@@ -15,12 +17,27 @@ class carRepository {
     }
 
     static async getAll() {
-        const getAllCar = await Cars.findAll();
+        const getAllCar = await Cars.findAll({
+            where: {
+                deletedAt: {
+                    [Op.eq]: null
+                }
+            }
+
+        });
         return getAllCar;
     }
 
     static async getByID({ id }) {
-        const getCar = await Cars.findOne({ where: { id } });
+        const getCar = await Cars.findOne({
+            where: {
+                id: id,
+                deletedAt: {
+                    [Op.eq]: null
+                }
+            }
+        });
+        // console.log(getCar)
         return getCar;
     }
 
@@ -35,14 +52,14 @@ class carRepository {
         return deleteCar;
     }
 
-    static async updateByID({ name, price, tipemobil, id_creator, image, id }) {
+    static async updateByID({ name, price, tipemobil, image, id, updatedBy }) {
         const updateCar = await Cars.update(
             {
                 name,
                 price,
                 tipemobil,
                 image,
-                id_creator
+                updatedBy
             },
             { where: { id } }
         );

@@ -117,6 +117,7 @@ class carService {
     static async getById({ id }) {
         try {
             const getDetailProduct = await carRepository.getByID({ id });
+            console.log(getDetailProduct)
             if (!getDetailProduct) {
                 return {
                     status: false,
@@ -141,7 +142,7 @@ class carService {
         }
     }
 
-    static async update({ name, price, tipemobil, image, id_creator, id }) {
+    static async update({ name, price, tipemobil, image, id, updatedBy }) {
         try {
             const getCar = await carRepository.getByID({ id })
 
@@ -187,14 +188,7 @@ class carService {
                     data: null,
                 };
             }
-            if (!id_creator) {
-                return {
-                    status: false,
-                    status_code: 400,
-                    message: 'Silahkan login kembali!',
-                    data: null,
-                };
-            }
+
 
             // Upload file to cloudinary
             const fileToUpload = image;
@@ -215,7 +209,7 @@ class carService {
                     tipemobil,
                     price,
                     image: result.url,
-                    id_creator,
+                    updatedBy,
                     id
                 });
             })
@@ -228,7 +222,7 @@ class carService {
                     "tipemobil": tipemobil,
                     "price": price,
                     "image": gambar,
-                    "id_creator": id_creator
+                    "updatedBy": updatedBy
 
                 },
             };

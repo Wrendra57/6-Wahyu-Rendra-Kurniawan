@@ -47,7 +47,7 @@ const updatedCar = async (req, res) => {
         price,
         tipemobil,
         image: req.file,
-        id_creator: req.user.id
+        updatedBy: req.user.id
     });
     res.status(status_code).send({
         status: status,
