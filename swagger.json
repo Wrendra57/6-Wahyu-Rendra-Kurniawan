@@ -1,0 +1,104 @@
+{
+  "openapi": "3.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Instagram API",
+    "description": "Instagram API Clone DOCS",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Product",
+      "description": "API for product"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/product": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "summary": "Get product Endpoint",
+        "responses": {
+          "201": {
+            "description": "Success get product.",
+            "schema": {
+              "$ref": "#/definitions/Products"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Product"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "Create product Endpoint",
+        "parameters": [
+          {
+            "name": "Create product",
+            "in": "body",
+            "description": "User to create Product.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Success creating product.",
+            "schema": {
+              "$ref": "#/definitions/Products"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "stock": {
+          "type": "integer"
+        }
+      }
+    },
+    "Products": {
+      "type": "array",
+      "$ref": "#/definitions/Product"
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter your bearer token in the format **Bearer &lt;token>**"
+    }
+  }
+}
