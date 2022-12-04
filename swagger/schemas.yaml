@@ -13,7 +13,7 @@ components:
             - error
     JsendSuccess:
       allOf:
-        - $ref: '#/components/schemas/Jsend'
+        - $ref: "#/components/schemas/Jsend"
         - type: object
           required:
             - data
@@ -26,7 +26,7 @@ components:
               type: object
     JsendError:
       allOf:
-        - $ref: '#/components/schemas/Jsend'
+        - $ref: "#/components/schemas/Jsend"
         - type: object
           required:
             - message
@@ -47,6 +47,15 @@ components:
     AuthRegister:
       type: object
       properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    AuthMe:
+      type: object
+      properties:
         role:
           type: string
         name:
@@ -55,13 +64,15 @@ components:
           type: string
         password:
           type: string
-    Product:
-      type: array
+    Cars:
+      type: object
       properties:
         name:
           type: string
+        tipemobil:
+          type: string
         price:
           type: integer
-        stock: 
-          type: integer
-    
+        picture:
+          type: string
+          format: binary

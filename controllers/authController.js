@@ -2,13 +2,13 @@ const AuthService = require("../services/authService");
 
 
 const registermember = async (req, res) => {
-  const { name, email, password,role } = req.body;
+  const { name, email, password } = req.body;
   console.log("cek" + name)
   const { status, status_code, message, data } = await AuthService.register({
     name,
     email,
     password,
-    role
+    role: "member"
   });
 
   res.status(status_code).send({

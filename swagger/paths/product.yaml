@@ -5,17 +5,17 @@ paths:
       security:
         - BearerAuth: []
       tags:
-        - Product
+        - Cars
       consumes:
-        - application/json
+        - multipart/form-data
       requestBody:
         required: true
         content:
-          "application/json":
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/Product"
+              $ref: "#/components/schemas/Cars"
       produces:
-        - application/json
+        -  multipart/form-data
       responses:
         200:
           description: An array of user data
@@ -32,22 +32,85 @@ paths:
                             - properties:
                                 id:
                                   type: integer
-                            - $ref: "#/components/schemas/AuthLogin"
-  /api/auth/register:
-    post:
-      summary: Register User
-      tags:
-        - Auth
+                            - $ref: "#/components/schemas/Cars"
+  
+    get:
+      summary: Get all cars
+      tags: 
+        - Cars
       consumes:
         - application/json
+      responses:
+        200:
+          description: An array of Cars list
+          content:
+            "application/json":
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/JsendSuccess"
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - properties:
+                                id:
+                                  type: integer
+                            - $ref: "#/components/schemas/Cars"
+  /cars/{id}:
+    get:
+      summary: Get cars by id
+      tags: 
+        - Cars
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Cars to get
+      responses:
+        200:
+          description: An array of Cars list
+          content:
+            "application/json":
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/JsendSuccess"
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - properties:
+                                id:
+                                  type: integer
+                            - $ref: "#/components/schemas/Cars"
+    put:
+      summary: update cars
+      tags: 
+        - Cars
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Cars to get
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
-          "application/json":
+          multipart/form-data:
             schema:
-              $ref: "#/components/schemas/AuthRegister"
+              $ref: "#/components/schemas/Cars"
       produces:
-        - application/json
+        -  multipart/form-data
       responses:
         200:
           description: An array of user data
@@ -64,4 +127,35 @@ paths:
                             - properties:
                                 id:
                                   type: integer
-                            - $ref: "#/components/schemas/AuthRegister"
+                            - $ref: "#/components/schemas/Cars"
+    delete:
+      summary: delete cars
+      tags: 
+        - Cars
+      consumes:
+        - application/json
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the Cars to get
+      responses:
+        200:
+          description: An array of Cars list
+          content:
+            "application/json":
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/JsendSuccess"
+                  - properties:
+                      data:
+                        type: array
+                        items:
+                          allOf:
+                            - properties:
+                                id:
+                                  type: integer
