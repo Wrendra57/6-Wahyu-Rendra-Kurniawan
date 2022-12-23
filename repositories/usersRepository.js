@@ -3,7 +3,7 @@ const { Users } = require("../models");
 class UsersRepository {
     static async getByEmail({ email }) {
         const getUser = await Users.findOne({ where: { email } });
-        console.log("getUser")
+        // console.log("getUser")
         return getUser;
     }
 

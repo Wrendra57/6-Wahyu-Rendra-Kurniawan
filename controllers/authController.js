@@ -1,14 +1,13 @@
 const AuthService = require("../services/authService");
 
-
 const registermember = async (req, res) => {
   const { name, email, password } = req.body;
-  console.log("cek" + name)
+  console.log("cek");
   const { status, status_code, message, data } = await AuthService.register({
     name,
     email,
     password,
-    role: "member"
+    role: "member",
   });
 
   res.status(status_code).send({
@@ -20,7 +19,7 @@ const registermember = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email)
+  console.log(email);
   const { status, status_code, message, data } = await AuthService.login({
     email,
     password,
@@ -35,11 +34,12 @@ const login = async (req, res) => {
 
 const registeradmin = async (req, res) => {
   const { name, email, password } = req.body;
-  const { status, status_code, message, data } = await AuthService.registeradmin({
-    name,
-    email,
-    password
-  });
+  const { status, status_code, message, data } =
+    await AuthService.registeradmin({
+      name,
+      email,
+      password,
+    });
 
   res.status(status_code).send({
     status: status,
@@ -60,4 +60,24 @@ const currentUser = async (req, res) => {
   });
 };
 
-module.exports = { registermember, login, registeradmin, currentUser };
+const loginGoogle = async (req, res) => {
+  const { google_credential } = req.body;
+
+  const { status, status_code, message, data } = await AuthService.loginGoogle({
+    google_credential,
+  });
+
+  res.status(status_code).send({
+    status: status,
+    message: message,
+    data: data,
+  });
+};
+
+module.exports = {
+  registermember,
+  login,
+  registeradmin,
+  currentUser,
+  loginGoogle,
+};
